@@ -38,33 +38,34 @@ public:
 	virtual ~ByteArray();
 
 public: // 类成员 setter and getter
-	inline size_t			getLength() const;
-	void					setLength( size_t );
+	inline size_t		getLength() const;
+	void			setLength( size_t );
 	
-	inline Endian			getEndian() const;
-	inline void				setEndian( Endian e );
+	inline Endian		getEndian() const;
+	inline void		setEndian( Endian e );
 
-	inline int				getPosition() const;
-	inline void				setPosition( size_t p );
+	inline int		getPosition() const;
+	inline void		setPosition( size_t p );
 	
-	inline uint8_t*			getBuffer();						//拿缓冲区指针
-	inline const uint8_t*	getConstBuffer() const;				//拿缓冲区指针，但是是const指针
+	inline uint8_t*		getBuffer();				//拿缓冲区指针
+	inline const uint8_t*	getConstBuffer() const;			//拿缓冲区指针，但是是const指针
 
 public: // 缓冲区数据访问
-	inline uint8_t			at( size_t position ) const;		//越界异常的访问方式
-	inline int				operator[]( size_t position ) const;//非越界异常的访问方式
+	inline uint8_t		at( size_t position ) const;		//越界异常的访问方式
+	inline int		operator[]( size_t position ) const;	//非越界异常的访问方式
 
 	/**
 	 * 直接写入缓冲区，和as3不同，不提供设置下标的能力，而是
 	 * 替换为一个函数来处理
 	 */
-	inline void				assign( size_t position, uint8_t value );
+	inline void		assign( size_t position, uint8_t value );
 
-	inline void				clear();								//缓冲区清空 
-	void					cut( size_t position, size_t length );			//把position,position+length的数据留下，其他删除
+	inline void		clear();				//缓冲区清空 
+	void			cut( size_t position, size_t length );	//把position,position+length的数据留下，其他删除
 
 public: // IDataInput的实现
-	inline size_t	getBytesAvailable() const;
+	inline size_t		getBytesAvailable() const;
+	
 	bool 			readBoolean();
 	int8_t 			readByte();
 	double 			readDouble();
@@ -87,26 +88,26 @@ public: // 扩展IDataInput
 	inline void		readBytesToCall( std::function<void (const void*, size_t)> func, size_t length );
 
 public: // IDataOutput实现
-	void 		writeBoolean( bool value );
-	void 		writeByte( int8_t value );
-	void 		writeDouble( double value );
-	void 		writeFloat( float value );
-	void 		writeShort( int16_t value );
-	void 		writeInt( int32_t value );
-	void 		writeUnsignedByte( uint8_t value );
-	void 		writeUnsignedShort( uint16_t value );
-	void 		writeUnsignedInt( uint32_t value );
-	void 		writeBytes( const void *bytes, uint32_t offset, size_t length );
-	void 		writeLongLong( int64_t value );
-	void 		writeUnsignedLongLong( uint64_t value );
+	void 			writeBoolean( bool value );
+	void 			writeByte( int8_t value );
+	void 			writeDouble( double value );
+	void 			writeFloat( float value );
+	void 			writeShort( int16_t value );
+	void 			writeInt( int32_t value );
+	void 			writeUnsignedByte( uint8_t value );
+	void 			writeUnsignedShort( uint16_t value );
+	void 			writeUnsignedInt( uint32_t value );
+	void 			writeBytes( const void *bytes, uint32_t offset, size_t length );
+	void 			writeLongLong( int64_t value );
+	void 			writeUnsignedLongLong( uint64_t value );
 
 public: // 扩展IDataOutput
-	inline void writeBytes( const ByteArray *bytes, uint32_t offset=0, size_t length=0 );
+	inline void 		writeBytes( const ByteArray *bytes, uint32_t offset=0, size_t length=0 );
 
 	/**
 	 * 作为缓冲区使用，从func中拉取长度为length数据的数据，写入到position开始的位置
 	 */
-	inline int  writeBytesFromCall( std::function<int (void*, size_t)> func, size_t length );
+	inline int  		writeBytesFromCall( std::function<int (void*, size_t)> func, size_t length );
 
 protected:
 	std::vector<uint8_t> _buffer;
